@@ -1,11 +1,13 @@
 package Clases;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Horario {
 
-    private int frecuencia;//Si es 1 es de lunes a viernes, si es 2 es fin de semana y si es 3 es alternado.
+    private int frecuencia;//Si es 0 es de fin de semana, si es 1 es lunes viernes y si es 2 es alternado.
     private LocalTime horaInicio;
     private LocalTime horaFin;
     private String codigo;
@@ -19,6 +21,18 @@ public class Horario {
         contador++;
     }
 
+    public LocalTime getHoraInicio() {
+        return horaInicio;
+    }
+
+    public LocalTime getHoraFin() {
+        return horaFin;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -27,4 +41,12 @@ public class Horario {
         return frecuencia == horario.frecuencia && Objects.equals(horaInicio, horario.horaInicio) && Objects.equals(horaFin, horario.horaFin) && Objects.equals(codigo, horario.codigo);
     }
 
+    @Override
+    public String toString() {
+        return "Horario{" +
+                "Frecuencia:" + frecuencia +
+                " Hora Inicio:" + horaInicio +
+                " Hora Fin:" + horaFin +
+                " Código: " + codigo;
+    }
 }

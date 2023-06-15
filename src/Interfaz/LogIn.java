@@ -22,7 +22,7 @@ public class LogIn extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setContentPane(panelPresentacion);
         this.pack();
-        gestionarUsuario=new GestionUsuario();
+        gestionarUsuario=GestionUsuario.getInstancia();
 
 
         btnLogIngre.addActionListener(new ActionListener() {
@@ -43,7 +43,7 @@ public class LogIn extends JFrame {
                         dispose();
                     }else if(usuarioactual instanceof Usuario){
                         System.out.println("El usuario ingresado fue un Usuario");
-                        AdministradorCRUD interfazadministrador=new AdministradorCRUD("GESTION PERFIL ADMINISTRADOR",usuarioactual,gestionarUsuario);
+                        AdministradorCRUD interfazadministrador=new AdministradorCRUD("GESTION PERFIL ADMINISTRADOR",usuarioactual);
                         interfazadministrador.setVisible(true);
                         dispose();//Cierra la ventana actual
 

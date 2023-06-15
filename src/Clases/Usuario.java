@@ -37,6 +37,14 @@ public class Usuario {
         return cedula;
     }
 
-
+    @Override
+    public String toString() {
+        return "\n --Usuario--\n" +
+                "Nombre= " + nombre+
+                "\nApellido= " + apellido +
+                "\nUsuario='" + usuario +
+                "\nEstado=" + estado +
+                "\nCódigo=" + codigo;
+    }
 }
 

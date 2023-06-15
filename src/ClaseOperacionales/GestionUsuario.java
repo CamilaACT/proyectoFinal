@@ -1,17 +1,27 @@
 package ClaseOperacionales;
 
 import Clases.Chofer;
+import Clases.Horario;
 import Clases.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GestionUsuario {
-    private static List<Usuario> listadoUsuarios=new ArrayList<Usuario>();
+    private List<Usuario> listadoUsuarios;
+    private static GestionUsuario instancia;
 
-    public GestionUsuario(){
+
+    private GestionUsuario(){
+        listadoUsuarios=new ArrayList<Usuario>();
         QuemarDatos();
         System.out.printf("Tamanio de la lista"+listadoUsuarios.size());
+    }
+    public static GestionUsuario getInstancia() {
+        if (instancia == null) {
+            instancia =new GestionUsuario();
+        }
+        return instancia;
     }
 
 
@@ -64,7 +74,7 @@ public class GestionUsuario {
 
     private void QuemarDatos(){
         addUsuario(new Usuario("1711512663","Camila","Cabrera"));
-        addUsuario(new Chofer("1750473942","Chofer","Ingreso","Harario 1"));
+        addUsuario(new Chofer("1750473942","Chofer","Ingreso",0));
     }
 
 
