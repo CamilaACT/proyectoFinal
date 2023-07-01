@@ -1,5 +1,6 @@
 package ClaseOperacionales;
 
+import Clases.AsistenteAdministrativo;
 import Clases.Chofer;
 import Clases.Horario;
 import Clases.Usuario;
@@ -72,8 +73,49 @@ public class GestionUsuario {
         return null;
     }
 
+
+    public boolean modificarUsuario(String cedula, String nombre, String apellido){
+        Usuario usuario1=busquedaUsuario(cedula);
+        if(usuario1!=null){
+            usuario1.setNombre(nombre);
+            usuario1.setApellido(apellido);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean modificarAsistente(String cedula, String nombre, String apellido,String sucursal){
+        Usuario usuario1=busquedaUsuario(cedula);
+        AsistenteAdministrativo asistente1 = (AsistenteAdministrativo)usuario1;
+        if(asistente1!=null){
+            asistente1.setNombre(nombre);
+            asistente1.setApellido(apellido);
+            asistente1.setSucursal(sucursal);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean modificarChofer(String cedula, String nombre, String apellido, int indice){
+        Usuario usuario1=busquedaUsuario(cedula);
+        Chofer chofer1= (Chofer) usuario1;
+        if(chofer1!=null){
+            chofer1.setNombre(nombre);
+            chofer1.setApellido(apellido);
+            chofer1.setHorario(GestionHorarios.getInstancia().encontrarHorario(indice));
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
+
     private void QuemarDatos(){
-        addUsuario(new Usuario("1711512663","Camila","Cabrera"));
+        addUsuario(new Usuario("1715126613","Camila","Cabrera"));
         addUsuario(new Chofer("1750473942","Chofer","Ingreso",0));
     }
 

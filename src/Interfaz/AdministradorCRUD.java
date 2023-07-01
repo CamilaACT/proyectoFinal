@@ -61,10 +61,15 @@ public class AdministradorCRUD extends JFrame {
     private JTabbedPane tabbedPane4;
     private JButton buscarButton;
     private JLabel txtTipoUsuario;
-    private JTextField textField1;
+    private JTextField txtSucursal;
     private JButton modificarButton;
     private JButton cancelarButton;
     private JTextField txtBuscarCedula;
+    private JTextField txtNomb;
+    private JTextField txtApell;
+    private JComboBox JcomboBoxHorario;
+    private JPanel JPanelSucursal;
+    private JPanel JPanelHorario;
     private Validacion validar;
     private GestionUsuario gestionUsuario;
     private GestionBuses gestionBuses;
@@ -81,10 +86,10 @@ public class AdministradorCRUD extends JFrame {
         this.gestionBuses = GestionBuses.getInstancia();
         this.gestionHorarios = GestionHorarios.getInstancia();
         validar = new Validacion();
-
         txtInicioNombre.setText(usuarioactual.getNombre());
         cargarComboBoxHorario();
-
+        JPanelSucursal.setVisible(false);
+        JPanelHorario.setVisible(false);
         btnRegistrarAdmin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -234,23 +239,82 @@ public class AdministradorCRUD extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Usuario usuario1 = gestionUsuario.busquedaUsuario(txtBuscarCedula.getText());
+
                 if (usuario1 == null) {
                     JOptionPane.showMessageDialog(null, "No se encontraron coincidencias de busqueda");
                 } else {
-                    if (usuario1 instanceof Usuario) {
+                    if (usuario1 instanceof AsistenteAdministrativo){
+                        AsistenteAdministrativo as = (AsistenteAdministrativo) usuario1;
+                        txtTipoUsuario.setText("Asistente Administrativo");
+                        JPanelSucursal.setVisible(true);
+                        txtNomb.setText(usuario1.getNombre());
+                        txtApell.setText(usuario1.getApellido());
+                        txtSucursal.setText(as.getSucursal());
 
-                    } else if (usuarioactual instanceof Usuario) {
 
+                    } else if (usuario1 instanceof Chofer) {
+                        JPanelHorario.setVisible(true);
+                        txtTipoUsuario.setText("Chofer");
+                        txtNomb.setText(usuario1.getNombre());
+                        txtApell.setText(usuario1.getApellido());
+                        Chofer chofer1 = (Chofer) usuario1;
+                        cargarComboBoxHorario();
                     }
+                    else
+                        txtNomb.setText(usuario1.getNombre());
+                        txtApell.setText(usuario1.getApellido());
+
                 }
-            }
+                }
         });
 
+        modificarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Usuario usuario1 = gestionUsuario.busquedaUsuario(txtBuscarCedula.getText());
+                    if (usuario1 instanceof AsistenteAdministrativo){
+                        AsistenteAdministrativo as = (AsistenteAdministrativo) usuario1;
+                        gestionUsuario.modificarAsistente(txtBuscarCedula.getText(),txtNomb.getText(),txtApell.getText(),txtSucursal.getText());
+                        txtBuscarCedula.setText("");
+                        txtNomb.setText("");
+                        txtApell.setText("");
+                        JPanelSucursal.setVisible(false);
+                        JPanelHorario.setVisible(false);
+                        txtTipoUsuario.setText("Usuario");
+                    } else if (usuario1 instanceof Chofer) {
+                        Chofer chofer1 = (Chofer) usuario1;
+                        gestionUsuario.modificarChofer(txtBuscarCedula.getText(),txtNomb.getText(),txtApell.getText(),JcomboBoxHorario.getSelectedIndex());
+                        txtBuscarCedula.setText("");
+                        txtNomb.setText("");
+                        txtApell.setText("");
+                        JPanelSucursal.setVisible(false);
+                        JPanelHorario.setVisible(false);
+                        txtTipoUsuario.setText("Usuario");
+                    }
+                    else
+                        gestionUsuario.modificarUsuario(txtBuscarCedula.getText(),txtNomb.getText(),txtApell.getText());
+                        txtBuscarCedula.setText("");
+                        txtNomb.setText("");
+                        txtApell.setText("");
+            }
+        });
+        cancelarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                txtBuscarCedula.setText("");
+                txtNomb.setText("");
+                txtApell.setText("");
+                JPanelSucursal.setVisible(false);
+                JPanelHorario.setVisible(false);
+                txtTipoUsuario.setText("Usuario");
+            }
+        });
     }
 
     private void cargarComboBoxHorario(){
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
         comboBoxHorarioChofer.setModel(comboBoxModel);
+        JcomboBoxHorario.setModel(comboBoxModel);
         List<String> nombres= GestionHorarios.getInstancia().detalleHorario();//gestion
         String nombre="";
         for (int i=0;i<nombres.size();i++) {
