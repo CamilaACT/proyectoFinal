@@ -61,4 +61,10 @@ public class GestionBuses {
 
     }
 
+    @Override
+    public String toString() {
+        return "GestionBuses{" +
+                "listadoBuses=" + listadoBuses +
+                '}';
+    }
 }

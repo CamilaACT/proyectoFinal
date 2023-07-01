@@ -21,7 +21,21 @@ public class Bus {
         this.capacidadPersonas = capacidadPersonas;
     }
 
+
     public String getPlaca() {
         return placa;
+    }
+
+    @Override
+    public String toString() {
+        return "Bus{" +
+                "Placa='" + placa + "\n" +
+                "Matricula='" + matricula + "\n" +
+                "Kilometraje=" + Kilometraje +"\n"+
+                "Fechamantenieminto=" + fechamantenieminto +"\n"+
+                "Estado=" + estado +"\n"+
+                "NumeroDefectos=" + numeroDefectos +"\n"+
+                "CapacidadPersonas=" + capacidadPersonas +"\n"+
+                '}';
     }
 }
