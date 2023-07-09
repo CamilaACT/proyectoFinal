@@ -19,6 +19,7 @@ public class RegistroCliente extends JFrame {
     private JTextField txtIngresaConfirmarContraseniaUsuario;
     private JButton btnRegistroUsuario;
     private JPanel panelRegistro;
+    private JButton cancelarButton;
     //private GestionUsuario gestionarUsuario;
     private Validacion validar;
     private static Usuario usuarioactual;
@@ -62,6 +63,14 @@ public RegistroCliente(String title) {
 
 
 
+        }
+    });
+    cancelarButton.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            LogIn logIn= new LogIn("GESTION PERFIL CHOFER");
+            logIn.setVisible(true);
+            dispose();
         }
     });
 }

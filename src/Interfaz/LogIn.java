@@ -1,6 +1,7 @@
 package Interfaz;
 
 import Clases.Chofer;
+import Clases.Cliente;
 import Clases.Usuario;
 import ClaseOperacionales.GestionUsuario;
 
@@ -36,11 +37,18 @@ public class LogIn extends JFrame {
                 if(usuarioactual==null){
                     JOptionPane.showMessageDialog(null, "Verifique los datos ingresados, clave o contraseña incorrectos");
                 }else{
-                    if(usuarioactual instanceof Chofer){
+                    if(usuarioactual instanceof Chofer) {
                         System.out.println("El usuario ingresado fue un chofer");
-                        ChoferInt interfazchofer=new ChoferInt("GESTION PERFIL CHOFER",usuarioactual);
+                        ChoferInt interfazchofer = new ChoferInt("GESTION PERFIL CHOFER", usuarioactual);
                         interfazchofer.setVisible(true);
                         dispose();
+                    }
+                        else if(usuarioactual instanceof Cliente) {
+                            System.out.println("El usuario ingresado fue un Cliente");
+                            ReservaCliente reservaCliente = new ReservaCliente("GESTION PERFIL ADMINISTRADOR");
+                            reservaCliente.setVisible(true);
+                            dispose();//Cierra la ventana actual
+
                     }else if(usuarioactual instanceof Usuario){
                         System.out.println("El usuario ingresado fue un Usuario");
                         AdministradorCRUD interfazadministrador=new AdministradorCRUD("GESTION PERFIL ADMINISTRADOR",usuarioactual);

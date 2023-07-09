@@ -35,15 +35,16 @@ public class GestionHorarios {
      */
     public boolean addHorario(Horario horario){
         for (Horario horario1 : listadoHorarios) {
-            System.out.println("QUE ES LA CONDICION"+horario1.equals(horario));
-            if(horario1.equals(horario)){
+            //System.out.println("QUE ES LA CONDICION"+horario1.equals(horario));
+            if (horario1.equals(horario)) {
                 return false;
             }
         }
-        listadoHorarios.add(horario);
-        System.out.println("Tamaño arreglo horarios: "+listadoHorarios.size());
-        return true;
+            listadoHorarios.add(horario);
+            System.out.println("Tamaño arreglo horarios: " + listadoHorarios.size());
+            return true;
     }
+
     public List<String> detalleHorario(){
         List<String> nombres=new ArrayList<String>();
         for (Horario horario1 : listadoHorarios) {

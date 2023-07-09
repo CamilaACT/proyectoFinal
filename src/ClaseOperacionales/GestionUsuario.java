@@ -177,7 +177,7 @@ public class GestionUsuario {
 
 
     private void QuemarDatos(){
-        addUsuario(new Usuario("1715126613","Camila","Cabrera"));
+        addUsuario(new Usuario("1711512663","Camila","Cabrera"));
         addUsuario(new Chofer("1750473942","Chofer","Ingreso",0));
     }
 

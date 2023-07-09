@@ -27,6 +27,7 @@ public class Usuario {
         contador++;
     }
 
+
     public String getNombre() {
         return nombre;
     }

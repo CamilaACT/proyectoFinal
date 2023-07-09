@@ -1,8 +1,11 @@
 package Interfaz;
 import ClaseOperacionales.GestionBuses;
 import ClaseOperacionales.GestionHorarios;
+import ClaseOperacionales.GestionRutas;
 import ClaseOperacionales.GestionUsuario;
 import Clases.*;
+import Clases.Ruta;
+import Grafo.Vertice;
 import Validaciones.Validacion;
 
 import javax.swing.*;
@@ -10,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.Dictionary;
+import java.util.Enumeration;
 import java.util.List;
 
 public class AdministradorCRUD extends JFrame {
@@ -84,11 +89,27 @@ public class AdministradorCRUD extends JFrame {
     private JTextField txtBuscarHorario;
     private JButton buscarHorarios;
     private JTextArea txtMostrarHorariosOrdenados;
+    private JTextField txtOrigen;
+    private JTextField txtDestino;
+    private JComboBox cmbHoras;
+    private JButton btnIngresarRuta;
+    private JTextField VerticetextField1;
+    private JButton insertarButton;
+    private JComboBox VerticeIniciocomboBox1;
+    private JComboBox VerticeFinalcomboBox1;
+    private JTextField PesotextField1;
+    private JButton insertarButton1;
+    private JButton mostrarRutaButton;
+    private JComboBox BusVerticeInicialcomboBox1;
+    private JButton DIJASKSTRAButton;
+    private JTextArea textArea1;
+    private JPanel PanelGrafo;
 
     private Validacion validar;
     private GestionUsuario gestionUsuario;
     private GestionBuses gestionBuses;
     private GestionHorarios gestionHorarios;
+    private Ruta ruta;
 
 
     public AdministradorCRUD(String title, Usuario usuarioactual) {
@@ -103,8 +124,11 @@ public class AdministradorCRUD extends JFrame {
         validar = new Validacion();
         txtInicioNombre.setText(usuarioactual.getNombre());
         cargarComboBoxHorario();
+        ruta=null;
         JPanelSucursal.setVisible(false);
         JPanelHorario.setVisible(false);
+        PanelGrafo.setVisible(false);
+
         btnRegistrarAdmin.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -205,19 +229,17 @@ public class AdministradorCRUD extends JFrame {
         btnRegistrarHorario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int horainicio = Integer.parseInt(ComboBoxHin.getSelectedItem().toString());
-                int minutoinicio = Integer.parseInt(ComboBoxMin.getSelectedItem().toString());
-                int horafin = Integer.parseInt(ComboBoxHfin.getSelectedItem().toString());
-                int minutofin = Integer.parseInt(ComoboBoxMfin.getSelectedItem().toString());
+                    int horainicio = Integer.parseInt(ComboBoxHin.getSelectedItem().toString());
+                    int minutoinicio = Integer.parseInt(ComboBoxMin.getSelectedItem().toString());
+                    int horafin = Integer.parseInt(ComboBoxHfin.getSelectedItem().toString());
+                    int minutofin = Integer.parseInt(ComoboBoxMfin.getSelectedItem().toString());
 
-                if (gestionHorarios.addHorario(new Horario(ComoboBoxMfin.getSelectedIndex(), LocalTime.of(horainicio, minutoinicio, 00), LocalTime.of(horafin, minutofin, 00)))) {
-                    JOptionPane.showMessageDialog(null, "Registro de horario correcto");
-                    cargarComboBoxHorario();
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo registrar el horario, ya existe un horario con esos parametros");
-                }
-
-
+                    if (gestionHorarios.addHorario(new Horario(ComoboBoxMfin.getSelectedIndex(), LocalTime.of(horainicio, minutoinicio, 00), LocalTime.of(horafin, minutofin, 00)))) {
+                        JOptionPane.showMessageDialog(null, "Registro de horario correcto");
+                        cargarComboBoxHorario();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se pudo registrar el horario, ya existe un horario con esos parametros");
+                    }
             }
         });
 
@@ -397,7 +419,93 @@ public class AdministradorCRUD extends JFrame {
 
                     }
                 });
-        }
+        btnIngresarRuta.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!txtOrigen.getText().isBlank()&&!txtDestino.getText().isBlank()){
+                    int horasMinutos;
+                    horasMinutos=Integer.parseInt(cmbHoras.getSelectedItem().toString())*60;
+                    //int tiempo;
+                    //tiempo=horasMinutos+Integer.parseInt(cmbMinutos.getSelectedItem().toString());
+                    ruta=new Ruta(txtOrigen.getText()+"-"+txtDestino.getText(),horasMinutos,txtOrigen.getText(),txtDestino.getText());
+                    if(GestionRutas.getInstancia().addRuta(ruta)){
+                        JOptionPane.showMessageDialog(null, "Se creo Correctamente la Ruta");
+                        PanelGrafo.setVisible(true);
+                        cargarComboBox();
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No fue posible crear la Ruta, ya existe una con el mismo destino y origen");
+                    }
+
+                }
+            }
+        });
+        insertarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!VerticetextField1.getText().isBlank()){
+                    if(ruta.getGrafoRuta().getVertexByValue(VerticetextField1.getText())==null){
+                        ruta.getGrafoRuta().addVertice(VerticetextField1.getText());
+                        cargarComboBox();
+                        JOptionPane.showMessageDialog(null, "Vertice añadido con éxito");
+                        System.out.printf("Tamaño al imprimir: "+ruta.getGrafoRuta().getVertices().size());
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Ya hay un vertice con ese nombre,pruebe con otro");
+                    }
+
+                }else{
+                    JOptionPane.showMessageDialog(null, "Llene correctamente el campo de vertice");
+                    textArea1.setText("No se añadio el vertice, reintente...");
+                }
+
+            }
+        });
+        insertarButton1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(!PesotextField1.getText().isBlank()){
+                    if(ruta.getGrafoRuta().getVertexByValue(VerticeIniciocomboBox1.getSelectedItem().toString()).aristaUnica(VerticeFinalcomboBox1.getSelectedItem().toString())){
+                        ruta.getGrafoRuta().addArista(VerticeIniciocomboBox1.getSelectedItem().toString(),VerticeFinalcomboBox1.getSelectedItem().toString(),Integer.parseInt(PesotextField1.getText()));
+                        JOptionPane.showMessageDialog(null, "Parada agregada con éxito");
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Esta Parada ya existe");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se puede agregar la parada, complete el campo de pesa");
+                }
+            }
+        });
+        mostrarRutaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea1.setText("");
+                for (int i = 0; i < ruta.getGrafoRuta().getVertices().size(); i++) {
+                    textArea1.append(ruta.getGrafoRuta().getVertices().get(i).imprimir(ruta.getGrafoRuta().isConPesos())+"\n");
+                }
+            }
+        });
+        DIJASKSTRAButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Dictionary[] result = ruta.getGrafoRuta().Dijsktra(ruta.getGrafoRuta().getVertexByValue(BusVerticeInicialcomboBox1.getSelectedItem().toString()));
+                Dictionary<String, Integer> distances = result[0];
+                Dictionary<String, Vertice> previous = result[1];
+
+                StringBuilder resultText = new StringBuilder();
+                Enumeration<String> keys = distances.keys(); // Obtener las claves usando keys()
+                while (keys.hasMoreElements()) {
+                    String vertexData = keys.nextElement();
+                    int distance = distances.get(vertexData);
+                    Vertice previousVertex = previous.get(vertexData);
+
+                    resultText.append("Vertice: ").append(vertexData).append("\n");
+                    resultText.append("Distancia: ").append(distance).append("\n");
+                    resultText.append("Vértice previo: ").append(previousVertex.getDato()).append("\n");
+                    resultText.append("-------------------\n");
+                }
+                textArea1.setText(resultText.toString());
+            }
+        });
+    }
 
             private void cargarComboBoxHorario() {
                 DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
@@ -411,6 +519,21 @@ public class AdministradorCRUD extends JFrame {
                 }
 
             }
+            private void cargarComboBox(){
+                DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+                DefaultComboBoxModel<String> comboBoxModel2 = new DefaultComboBoxModel<>();
+                DefaultComboBoxModel<String> comboBoxModel3 = new DefaultComboBoxModel<>();
+                VerticeIniciocomboBox1.setModel(comboBoxModel);
+                VerticeFinalcomboBox1.setModel(comboBoxModel2);
+                BusVerticeInicialcomboBox1.setModel(comboBoxModel3);
+                for (Vertice vertice : ruta.getGrafoRuta().getVertices() ) {
+                    String data = vertice.getDato();
+                    comboBoxModel.addElement(data);
+                    comboBoxModel2.addElement(data);
+                    comboBoxModel3.addElement(data);
+                }
+    }
+
         }
 
 
