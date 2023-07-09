@@ -1,9 +1,6 @@
 package ClaseOperacionales;
 
-import Clases.AsistenteAdministrativo;
-import Clases.Chofer;
-import Clases.Horario;
-import Clases.Usuario;
+import Clases.*;
 import Ordenamiento.OrdenUsuario;
 
 import java.util.ArrayList;
@@ -179,6 +176,8 @@ public class GestionUsuario {
     private void QuemarDatos(){
         addUsuario(new Usuario("1711512663","Camila","Cabrera"));
         addUsuario(new Chofer("1750473942","Chofer","Ingreso",0));
+        addUsuario(new Cliente("1724051592","Dylan","Clerque","Dyl","123"
+                ,"dylan.clerque..."));
     }
 
 

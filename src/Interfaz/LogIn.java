@@ -42,10 +42,9 @@ public class LogIn extends JFrame {
                         ChoferInt interfazchofer = new ChoferInt("GESTION PERFIL CHOFER", usuarioactual);
                         interfazchofer.setVisible(true);
                         dispose();
-                    }
-                        else if(usuarioactual instanceof Cliente) {
+                    } else if(usuarioactual instanceof Cliente) {
                             System.out.println("El usuario ingresado fue un Cliente");
-                            ReservaCliente reservaCliente = new ReservaCliente("GESTION PERFIL ADMINISTRADOR");
+                            ClienteInt reservaCliente = new ClienteInt("Hola");
                             reservaCliente.setVisible(true);
                             dispose();//Cierra la ventana actual
 
