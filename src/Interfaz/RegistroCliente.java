@@ -68,7 +68,7 @@ public RegistroCliente(String title) {
     cancelarButton.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            LogIn logIn= new LogIn("GESTION PERFIL CHOFER");
+            LogIn logIn= new LogIn("Log In");
             logIn.setVisible(true);
             dispose();
         }

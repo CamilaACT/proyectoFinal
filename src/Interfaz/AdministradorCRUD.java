@@ -435,9 +435,6 @@ public class AdministradorCRUD extends JFrame {
                     //tiempo=horasMinutos+Integer.parseInt(cmbMinutos.getSelectedItem().toString());
                     ruta=new Ruta(txtOrigen.getText()+"-"+txtDestino.getText(),horasMinutos,txtOrigen.getText(),txtDestino.getText());
 
-                    int tiempo;
-                    tiempo=horasMinutos+Integer.parseInt(cmbMinutos.getSelectedItem().toString());
-                    ruta=new Ruta(txtOrigen.getText()+"-"+txtDestino.getText(),tiempo,txtOrigen.getText(),txtDestino.getText());
                     if(GestionRutas.getInstancia().addRuta(ruta)){
                         JOptionPane.showMessageDialog(null, "Se creo Correctamente la Ruta");
                         PanelGrafo.setVisible(true);
