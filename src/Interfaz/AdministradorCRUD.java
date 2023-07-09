@@ -92,6 +92,8 @@ public class AdministradorCRUD extends JFrame {
     private JTextField txtOrigen;
     private JTextField txtDestino;
     private JComboBox cmbHoras;
+
+    private JComboBox cmbMinutos;
     private JButton btnIngresarRuta;
     private JTextField VerticetextField1;
     private JButton insertarButton;
@@ -104,6 +106,9 @@ public class AdministradorCRUD extends JFrame {
     private JButton DIJASKSTRAButton;
     private JTextArea textArea1;
     private JPanel PanelGrafo;
+
+    private JButton aceptarButton;
+
 
     private Validacion validar;
     private GestionUsuario gestionUsuario;
@@ -425,9 +430,14 @@ public class AdministradorCRUD extends JFrame {
                 if(!txtOrigen.getText().isBlank()&&!txtDestino.getText().isBlank()){
                     int horasMinutos;
                     horasMinutos=Integer.parseInt(cmbHoras.getSelectedItem().toString())*60;
+
                     //int tiempo;
                     //tiempo=horasMinutos+Integer.parseInt(cmbMinutos.getSelectedItem().toString());
                     ruta=new Ruta(txtOrigen.getText()+"-"+txtDestino.getText(),horasMinutos,txtOrigen.getText(),txtDestino.getText());
+
+                    int tiempo;
+                    tiempo=horasMinutos+Integer.parseInt(cmbMinutos.getSelectedItem().toString());
+                    ruta=new Ruta(txtOrigen.getText()+"-"+txtDestino.getText(),tiempo,txtOrigen.getText(),txtDestino.getText());
                     if(GestionRutas.getInstancia().addRuta(ruta)){
                         JOptionPane.showMessageDialog(null, "Se creo Correctamente la Ruta");
                         PanelGrafo.setVisible(true);
