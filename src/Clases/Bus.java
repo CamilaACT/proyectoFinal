@@ -26,6 +26,30 @@ public class Bus {
         return placa;
     }
 
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public int getKilometraje() {
+        return Kilometraje;
+    }
+
+    public Date getFechamantenieminto() {
+        return fechamantenieminto;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public int getNumeroDefectos() {
+        return numeroDefectos;
+    }
+
+    public int getCapacidadPersonas() {
+        return capacidadPersonas;
+    }
+
     @Override
     public String toString() {
         return "Bus{" +

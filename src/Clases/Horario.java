@@ -20,6 +20,9 @@ public class Horario {
         codigo= "HO-"+contador;
         contador++;
     }
+    public int getFrecuencia(){
+        return frecuencia;
+    }
 
     public LocalTime getHoraInicio() {
         return horaInicio;

@@ -4,8 +4,10 @@ import Clases.AsistenteAdministrativo;
 import Clases.Chofer;
 import Clases.Horario;
 import Clases.Usuario;
+import Ordenamiento.OrdenUsuario;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GestionUsuario {
@@ -74,6 +76,7 @@ public class GestionUsuario {
     }
 
 
+
     public boolean modificarUsuario(String cedula, String nombre, String apellido){
         Usuario usuario1=busquedaUsuario(cedula);
         if(usuario1!=null){
@@ -112,6 +115,65 @@ public class GestionUsuario {
     }
 
 
+
+
+
+    /**
+     * Ordenamiento Usuario y búsqueda binaria.
+     * @param dato
+     * @param selectedIndex
+     */
+    public Usuario buscarUsuarioBinario(String dato, int selectedIndex){
+        Usuario retornarUsuario = null;
+        MostrarUsuarios(selectedIndex);
+
+        switch (selectedIndex){
+            case 0:
+                //Ordenar por cedula
+                String cedula = dato;
+                retornarUsuario = OrdenUsuario.binarySearch(listadoUsuarios, Comparator.comparing(Usuario::getCedula), new Usuario(cedula,"",""));
+                break;
+            case 1:
+                //Ordenar por nombre
+                String nombre = dato;
+                retornarUsuario = OrdenUsuario.binarySearch(listadoUsuarios, Comparator.comparing(Usuario::getNombre), new Usuario("", nombre, ""));
+                break;
+            case 2:
+                //Ordenar por apellido
+                String apellido = dato;
+                retornarUsuario = OrdenUsuario.binarySearch(listadoUsuarios, Comparator.comparing(Usuario::getApellido), new Usuario("", "", apellido));
+                break;
+        }
+
+        return retornarUsuario;
+    }
+
+    /**
+     * Mostrar Usuarios
+     */
+    public String MostrarUsuarios(int selectedIndex) {
+        switch (selectedIndex){
+            case 0:
+                //Ordenar por cedula
+                OrdenUsuario.Burbuja(listadoUsuarios, Comparator.comparing(Usuario::getCedula));
+                break;
+            case 1:
+                //Ordenar por nombre
+                OrdenUsuario.Burbuja(listadoUsuarios, Comparator.comparing(Usuario::getNombre));
+                break;
+            case 2:
+                //Ordenar por apellido
+                OrdenUsuario.Insercion(listadoUsuarios, Comparator.comparing(Usuario::getApellido));
+                break;
+        }
+        String usuarios = "";
+
+        for (int i = 0; i < listadoUsuarios.size(); i++) {
+            usuarios += listadoUsuarios.get(i).toString() + "\n";
+        }
+
+        return usuarios;
+    }
 
 
     private void QuemarDatos(){
