@@ -1,6 +1,4 @@
 package Interfaz;
-
-
 import ClaseOperacionales.GestionBuses;
 import ClaseOperacionales.GestionHorarios;
 import ClaseOperacionales.GestionUsuario;
@@ -51,13 +49,12 @@ public class AdministradorCRUD extends JFrame {
     private JTextField txtChoferNombre;
     private JTextField txtChoferApellido;
     private JButton btnRegistrarHorario;
-    private JTabbedPane tabbedPane3;
     private JTextField txtBuscarUsuario;
-    private JButton btnBuscarUsuario;
+    //private JButton btnBuscarUsuario;
     private JTextArea txtResultadoBusqueda;
     private JTextArea txtResultadoBuaquedaBuses;
     private JTextField txtBusPlaca;
-    private JButton btnBuscarBus;
+    //private JButton btnBuscarBus;
     private JTabbedPane tabbedPane4;
     private JButton buscarButton;
     private JLabel txtTipoUsuario;
@@ -65,11 +62,29 @@ public class AdministradorCRUD extends JFrame {
     private JButton modificarButton;
     private JButton cancelarButton;
     private JTextField txtBuscarCedula;
+
     private JTextField txtNomb;
     private JTextField txtApell;
     private JComboBox JcomboBoxHorario;
     private JPanel JPanelSucursal;
     private JPanel JPanelHorario;
+
+    private JTabbedPane tabbedPane3;
+    private JComboBox comboBoxUsuarios;
+    private JButton buscarUsuarios;
+    private JButton mostrarUsuarios;
+    private JTextArea txtMostrarUsuariosOrdenados;
+    private JComboBox comboBoxBuses;
+    private JButton mostrarBuses;
+    private JTextField txtBuscarBus;
+    private JButton buscarBuses;
+    private JTextArea txtMostrarBusesOrdenados;
+    private JComboBox comboBoxHorarios;
+    private JButton mostrarHorarios;
+    private JTextField txtBuscarHorario;
+    private JButton buscarHorarios;
+    private JTextArea txtMostrarHorariosOrdenados;
+
     private Validacion validar;
     private GestionUsuario gestionUsuario;
     private GestionBuses gestionBuses;
@@ -205,7 +220,9 @@ public class AdministradorCRUD extends JFrame {
 
             }
         });
-        btnBuscarUsuario.addActionListener(new ActionListener() {
+
+        /*btnBuscarUsuario.addActionListener(new ActionListener() {
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 Usuario usuario1 = gestionUsuario.busquedaUsuario(txtBuscarUsuario.getText());
@@ -219,8 +236,8 @@ public class AdministradorCRUD extends JFrame {
                 }
 
             }
-        });
-        btnBuscarBus.addActionListener(new ActionListener() {
+        });*/
+        /*btnBuscarBus.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -234,7 +251,7 @@ public class AdministradorCRUD extends JFrame {
 
 
             }
-        });
+        });*/
         buscarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -243,7 +260,7 @@ public class AdministradorCRUD extends JFrame {
                 if (usuario1 == null) {
                     JOptionPane.showMessageDialog(null, "No se encontraron coincidencias de busqueda");
                 } else {
-                    if (usuario1 instanceof AsistenteAdministrativo){
+                    if (usuario1 instanceof AsistenteAdministrativo) {
                         AsistenteAdministrativo as = (AsistenteAdministrativo) usuario1;
                         txtTipoUsuario.setText("Asistente Administrativo");
                         JPanelSucursal.setVisible(true);
@@ -259,43 +276,42 @@ public class AdministradorCRUD extends JFrame {
                         txtApell.setText(usuario1.getApellido());
                         Chofer chofer1 = (Chofer) usuario1;
                         cargarComboBoxHorario();
-                    }
-                    else
+                    } else
                         txtNomb.setText(usuario1.getNombre());
-                        txtApell.setText(usuario1.getApellido());
+                    txtApell.setText(usuario1.getApellido());
 
                 }
-                }
+            }
         });
+
 
         modificarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Usuario usuario1 = gestionUsuario.busquedaUsuario(txtBuscarCedula.getText());
-                    if (usuario1 instanceof AsistenteAdministrativo){
-                        AsistenteAdministrativo as = (AsistenteAdministrativo) usuario1;
-                        gestionUsuario.modificarAsistente(txtBuscarCedula.getText(),txtNomb.getText(),txtApell.getText(),txtSucursal.getText());
-                        txtBuscarCedula.setText("");
-                        txtNomb.setText("");
-                        txtApell.setText("");
-                        JPanelSucursal.setVisible(false);
-                        JPanelHorario.setVisible(false);
-                        txtTipoUsuario.setText("Usuario");
-                    } else if (usuario1 instanceof Chofer) {
-                        Chofer chofer1 = (Chofer) usuario1;
-                        gestionUsuario.modificarChofer(txtBuscarCedula.getText(),txtNomb.getText(),txtApell.getText(),JcomboBoxHorario.getSelectedIndex());
-                        txtBuscarCedula.setText("");
-                        txtNomb.setText("");
-                        txtApell.setText("");
-                        JPanelSucursal.setVisible(false);
-                        JPanelHorario.setVisible(false);
-                        txtTipoUsuario.setText("Usuario");
-                    }
-                    else
-                        gestionUsuario.modificarUsuario(txtBuscarCedula.getText(),txtNomb.getText(),txtApell.getText());
-                        txtBuscarCedula.setText("");
-                        txtNomb.setText("");
-                        txtApell.setText("");
+                if (usuario1 instanceof AsistenteAdministrativo) {
+                    AsistenteAdministrativo as = (AsistenteAdministrativo) usuario1;
+                    gestionUsuario.modificarAsistente(txtBuscarCedula.getText(), txtNomb.getText(), txtApell.getText(), txtSucursal.getText());
+                    txtBuscarCedula.setText("");
+                    txtNomb.setText("");
+                    txtApell.setText("");
+                    JPanelSucursal.setVisible(false);
+                    JPanelHorario.setVisible(false);
+                    txtTipoUsuario.setText("Usuario");
+                } else if (usuario1 instanceof Chofer) {
+                    Chofer chofer1 = (Chofer) usuario1;
+                    gestionUsuario.modificarChofer(txtBuscarCedula.getText(), txtNomb.getText(), txtApell.getText(), JcomboBoxHorario.getSelectedIndex());
+                    txtBuscarCedula.setText("");
+                    txtNomb.setText("");
+                    txtApell.setText("");
+                    JPanelSucursal.setVisible(false);
+                    JPanelHorario.setVisible(false);
+                    txtTipoUsuario.setText("Usuario");
+                } else
+                    gestionUsuario.modificarUsuario(txtBuscarCedula.getText(), txtNomb.getText(), txtApell.getText());
+                txtBuscarCedula.setText("");
+                txtNomb.setText("");
+                txtApell.setText("");
             }
         });
         cancelarButton.addActionListener(new ActionListener() {
@@ -309,21 +325,93 @@ public class AdministradorCRUD extends JFrame {
                 txtTipoUsuario.setText("Usuario");
             }
         });
-    }
 
-    private void cargarComboBoxHorario(){
-        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
-        comboBoxHorarioChofer.setModel(comboBoxModel);
-        JcomboBoxHorario.setModel(comboBoxModel);
-        List<String> nombres= GestionHorarios.getInstancia().detalleHorario();//gestion
-        String nombre="";
-        for (int i=0;i<nombres.size();i++) {
-            nombre=nombres.get(i);
-            comboBoxModel.addElement(nombre);
+        mostrarUsuarios.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        txtMostrarUsuariosOrdenados.setText(gestionUsuario.MostrarUsuarios(comboBoxUsuarios.getSelectedIndex()));
+                    }
+                });
+        buscarUsuarios.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (txtBuscarUsuario.getText().equals("")) {
+                            txtMostrarUsuariosOrdenados.setText("Ingrese un dato a buscar");
+                            return;
+                        }
+
+                        Usuario usuario = gestionUsuario.buscarUsuarioBinario(txtBuscarUsuario.getText(), comboBoxUsuarios.getSelectedIndex());
+
+                        if (usuario == null) {
+                            txtMostrarUsuariosOrdenados.setText("No se encontro el usuario");
+                        } else {
+                            txtMostrarUsuariosOrdenados.setText(usuario.toString());
+                        }
+                    }
+                });
+        mostrarBuses.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        txtMostrarBusesOrdenados.setText(gestionBuses.MostrarBuses(comboBoxBuses.getSelectedIndex()));
+                    }
+                });
+        buscarBuses.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (txtBuscarBus.getText().equals("")) {
+                            txtMostrarBusesOrdenados.setText("Ingrese un dato a buscar");
+                            return;
+                        }
+
+                        Bus bus1 = gestionBuses.buscarBusesBinario(txtBuscarBus.getText(), comboBoxBuses.getSelectedIndex());
+
+                        if (bus1 == null) {
+                            txtMostrarBusesOrdenados.setText("No se encontro el bus");
+                        } else {
+                            txtMostrarBusesOrdenados.setText(bus1.toString());
+                        }
+                    }
+
+                });
+        mostrarHorarios.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        txtMostrarHorariosOrdenados.setText(gestionHorarios.MostrarHorarios(comboBoxHorarios.getSelectedIndex()));
+                    }
+                });
+        buscarHorarios.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        if (txtBuscarHorario.getText().equals("")) {
+                            txtMostrarHorariosOrdenados.setText("Ingrese un dato a buscar");
+                            return;
+                        }
+
+                        Horario horario1 = gestionHorarios.buscarUsuarioBinario(txtBuscarBus.getText(), comboBoxHorarios.getSelectedIndex());
+
+                        if (horario1 == null) {
+                            txtMostrarHorariosOrdenados.setText("No se encontro el horario");
+                        } else {
+                            txtMostrarHorariosOrdenados.setText(horario1.toString());
+                        }
+
+                    }
+                });
         }
 
-         }
-    }
+            private void cargarComboBoxHorario() {
+                DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+                comboBoxHorarioChofer.setModel(comboBoxModel);
+                JcomboBoxHorario.setModel(comboBoxModel);
+                List<String> nombres = GestionHorarios.getInstancia().detalleHorario();//gestion
+                String nombre = "";
+                for (int i = 0; i < nombres.size(); i++) {
+                    nombre = nombres.get(i);
+                    comboBoxModel.addElement(nombre);
+                }
+
+            }
+        }
 
 
 

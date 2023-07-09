@@ -11,9 +11,9 @@ import java.awt.event.ActionListener;
 public class LogIn extends JFrame {
     private JTextField txtLogUsua;
     private JButton btnLogIngre;
-    private JLabel txtBtnRegistrarse;
     private JPanel panelPresentacion;
     private JPasswordField txtLogCont;
+    private JButton registrarseButton;
     private GestionUsuario gestionarUsuario;
     private static Usuario usuarioactual;
 
@@ -50,6 +50,14 @@ public class LogIn extends JFrame {
                     }
                 }
 
+            }
+        });
+        registrarseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RegistroCliente registroCliente=new RegistroCliente("Registro cliente");
+                registroCliente.setVisible(true);
+                dispose();
             }
         });
     }

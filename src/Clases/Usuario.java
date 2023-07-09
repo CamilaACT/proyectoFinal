@@ -16,6 +16,16 @@ public class Usuario {
         this.contrasenia ="password"+contador;
         contador++;
     }
+    public Usuario(String cedula, String nombre, String apellido, String usuario, String contrasenia){
+        this.cedula = cedula;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.usuario = usuario;
+        this.contrasenia=contrasenia;
+        this.estado=1;
+        this.codigo=contador;
+        contador++;
+    }
 
     public String getNombre() {
         return nombre;

@@ -2,8 +2,13 @@ package ClaseOperacionales;
 
 import Clases.Bus;
 import Clases.Horario;
+import Ordenamiento.OrdenBuses;
+import Ordenamiento.OrdenHorarios;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +57,86 @@ public class GestionBuses {
             }
         }
         return null;
+    }
+    public Bus buscarBusesBinario(String dato, int selectedIndex){
+        Bus retornarBus = null;
+        MostrarBuses(selectedIndex);
+
+        switch (selectedIndex){
+            case 0:
+                //Ordenar por placa
+                String placa = dato;
+                retornarBus = OrdenBuses.binarySearch(listadoBuses, Comparator.comparing(Bus::getPlaca), new Bus(dato,"",0, null, 0,0));
+                break;
+            case 1:
+                //Ordenar por matricula
+                String matricula = dato;
+                retornarBus = OrdenBuses.binarySearch(listadoBuses, Comparator.comparing(Bus::getMatricula), new Bus("", matricula, 0,null,0,0));
+                break;
+            case 2:
+                //Ordenar por Kilometraje
+                int kilometraje = Integer.parseInt(dato);
+                retornarBus = OrdenBuses.binarySearch(listadoBuses, Comparator.comparing(Bus::getKilometraje), new Bus("", "", kilometraje,null,0,0));
+                break;
+            case 3:
+                //Ordenar por fecha de mantenimiento
+                Date fechaMantenimiento= new Date();
+                SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+                dato=formatoFecha.format(fechaMantenimiento);
+                retornarBus = OrdenBuses.binarySearch(listadoBuses, Comparator.comparing(Bus::getFechamantenieminto), new Bus("", "",0,fechaMantenimiento,0,0));
+                break;
+            case 4:
+                //Ordenar por número de defectos
+                int defectos = Integer.parseInt(dato);
+                retornarBus = OrdenBuses.binarySearch(listadoBuses, Comparator.comparing(Bus::getNumeroDefectos), new Bus("","", 0,null,defectos,0));
+                break;
+            case 5:
+                //Ordenar por capacidad de personas
+                int capaPersonas = Integer.parseInt(dato);
+                retornarBus = OrdenBuses.binarySearch(listadoBuses, Comparator.comparing(Bus::getCapacidadPersonas), new Bus("","",0,null,0,capaPersonas));
+                break;
+        }
+
+        return retornarBus;
+    }
+
+    /**
+     * Mostrar Buses
+     */
+    public String MostrarBuses(int selectedIndex) {
+        switch (selectedIndex){
+            case 0:
+                //Ordenar por placa
+                OrdenBuses.Burbuja(listadoBuses, Comparator.comparing(Bus::getPlaca));
+                break;
+            case 1:
+                //Ordenar por matricula
+                OrdenBuses.Burbuja(listadoBuses, Comparator.comparing(Bus::getMatricula));
+                break;
+            case 2:
+                //Ordenar por kilometraje
+                OrdenBuses.Insercion(listadoBuses, Comparator.comparing(Bus::getKilometraje));
+                break;
+            case 3:
+                //Ordenar por fecha de mantenimiento
+                OrdenBuses.Insercion(listadoBuses, Comparator.comparing(Bus::getFechamantenieminto));
+                break;
+            case 4:
+                //Ordenar por número de defectos
+                OrdenBuses.Insercion(listadoBuses, Comparator.comparing(Bus::getNumeroDefectos));
+                break;
+            case 5:
+                //Ordenar por capacidad de personas
+                OrdenBuses.Insercion(listadoBuses, Comparator.comparing(Bus::getCapacidadPersonas));
+                break;
+        }
+        String horarios = "";
+
+        for (int i = 0; i < listadoBuses.size(); i++) {
+            horarios += listadoBuses.get(i).toString() + "\n";
+        }
+
+        return horarios;
     }
 
     private void QuemarDatos(){
