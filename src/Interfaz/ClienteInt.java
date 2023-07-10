@@ -60,10 +60,11 @@ public ClienteInt(String title, Usuario usuario) {
     cargarComboBoxRuta();
     txtInicioNombre.setText(cliente.getNombre());
     button1.addActionListener(new ActionListener() {
-
+        Validacion v;
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("12424211421412412");
+           if(v.validacionStringInt(textField1.getText()) && v.validacionStringInt(textField2.getText())) {
+
             ArbolDecision root = new ArbolDecision("¿Finde o Entre?",20,10);
             ArbolDecision FirstNode = new ArbolDecision("¿Mayor de 40 km??",20,10);
             ArbolDecision SecondNode = new ArbolDecision("¿Capacidad de personas mayor a 20?",20,15);
@@ -123,7 +124,7 @@ public ClienteInt(String title, Usuario usuario) {
                 cont++;
             }
             textField3.setText("El precio de esta ruta es: "+l);
-        }
+        }}
     });
     confirmarButton.addActionListener(new ActionListener() {
         @Override
