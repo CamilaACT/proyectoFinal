@@ -110,10 +110,18 @@ public class GestionUsuario {
             return false;
         }
     }
+    public Usuario encontrarChoferDisponible(int dia, int hora, int mes, int horaFin, int frecuencia){
+        for (Usuario usuario1 : listadoUsuarios) {
+            if(usuario1 instanceof Chofer){
+                Chofer chofer=(Chofer) usuario1;
+                if(chofer.HoararioChoferDisponible(dia, hora, mes, horaFin, frecuencia)){
+                    return usuario1;
+                }
+            }
+        }
+        return null;
 
-
-
-
+    }
 
     /**
      * Ordenamiento Usuario y búsqueda binaria.
@@ -176,6 +184,7 @@ public class GestionUsuario {
     private void QuemarDatos(){
         addUsuario(new Usuario("1711512663","Camila","Cabrera"));
         addUsuario(new Chofer("1750473942","Chofer","Ingreso",0));
+        addUsuario(new Chofer("1750473942","Chofer2","Ingreso2",1));
         addUsuario(new Cliente("1724051592","Dylan","Clerque","Dyl","123"
                 ,"dylan.clerque..."));
     }

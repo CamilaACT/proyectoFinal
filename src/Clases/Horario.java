@@ -46,10 +46,10 @@ public class Horario {
 
     @Override
     public String toString() {
-        return "Horario{" +
-                "Frecuencia:" + frecuencia +
-                " Hora Inicio:" + horaInicio +
-                " Hora Fin:" + horaFin +
-                " Código: " + codigo;
+        return "\n--Horario--" +"\n"+
+                "Frecuencia:" + frecuencia +"\n"+
+                "Hora Inicio:" + horaInicio +"\n"+
+                "Hora Fin:" + horaFin +"\n"+
+                "Código: " + codigo;
     }
 }

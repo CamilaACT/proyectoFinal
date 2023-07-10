@@ -1,6 +1,7 @@
 package ClaseOperacionales;
 
 import Clases.Bus;
+import Clases.Horario;
 import Clases.Ruta;
 import Clases.Usuario;
 
@@ -14,8 +15,8 @@ public class GestionRutas {
     //Patron singelton
     private GestionRutas(){
         listadoRutas=new ArrayList<Ruta>();
-        //QuemarDatos();
-        System.out.printf("Tamanio de la lista quemando datos buses: "+listadoRutas.size());
+        QuemarDatos();
+        System.out.printf("Tamanio de la lista quemando datos rutas: "+listadoRutas.size());
     }
     public static GestionRutas getInstancia() {
         if (instancia == null) {
@@ -51,11 +52,22 @@ public class GestionRutas {
         }
         return false;
     }
+    public List<String> detalleRuta(){
+        List<String> nombres=new ArrayList<String>();
+        for (Ruta ruta1 : listadoRutas) {
+            nombres.add(ruta1.getNombre());
+        }
+        return nombres;
+    }
 
     private void QuemarDatos(){
-        listadoRutas.add(new Ruta("Quito-Zoologico",180,"Quito","Zoologico"));
-        listadoRutas.add(new Ruta("Quito-Cuenca",180,"Quito","Cuenca"));
+        listadoRutas.add(new Ruta("Quito-Zoologico",1,"Quito","Zoologico"));
+        listadoRutas.add(new Ruta("Quito-Cuenca",2,"Quito","Cuenca"));
     }
+    public Ruta devolverRutaporIndice(int indice){
+       return listadoRutas.get(indice);
+    }
+
 
 
 }

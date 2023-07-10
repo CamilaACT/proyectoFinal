@@ -44,7 +44,7 @@ public class LogIn extends JFrame {
                         dispose();
                     } else if(usuarioactual instanceof Cliente) {
                             System.out.println("El usuario ingresado fue un Cliente");
-                            ClienteInt reservaCliente = new ClienteInt("Hola");
+                            ClienteInt reservaCliente = new ClienteInt("Cliente",usuarioactual);
                             reservaCliente.setVisible(true);
                             dispose();//Cierra la ventana actual
 

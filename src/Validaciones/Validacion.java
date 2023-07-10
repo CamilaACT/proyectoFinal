@@ -9,6 +9,14 @@ public class Validacion {
             return false;
         }
     }
+    public  boolean validacionStringDouble(String string) {
+        try {
+            double number = Double.parseDouble(string);
+            return number > 0;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
     public boolean validacionStrings(String dato){
         boolean valido;
         valido = dato.matches("[A-Z][a-z]+")||dato.matches("[a-z]+"); //System.out.println("val2");

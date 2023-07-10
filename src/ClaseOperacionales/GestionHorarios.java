@@ -58,7 +58,8 @@ public class GestionHorarios {
     }
 
     private void QuemarDatos(){
-        listadoHorarios.add(new Horario(1,LocalTime.of(12, 30, 0),LocalTime.of(13, 30, 0)));
+        listadoHorarios.add(new Horario(0,LocalTime.of(12, 00, 0),LocalTime.of(15, 00, 0)));
+        listadoHorarios.add(new Horario(1,LocalTime.of(12, 00, 0),LocalTime.of(13, 00, 0)));
     }
     public Horario buscarUsuarioBinario(String dato, int selectedIndex){
         Horario retornarHorario = null;

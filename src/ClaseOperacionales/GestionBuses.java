@@ -28,6 +28,14 @@ public class GestionBuses {
         }
         return instancia;
     }
+    public Bus identificarBus(int dia,int hora,int mes,int capacidadPersonas,int horaFin){
+        for (Bus bus1 : listadoBuses) {
+            if(bus1.HoararioBusDisponible(dia,hora,mes,capacidadPersonas,horaFin)){
+                return bus1;
+            }
+        }
+        return null;
+    }
 
 
     /**
@@ -141,7 +149,7 @@ public class GestionBuses {
 
     private void QuemarDatos(){
 
-        addBus(new Bus("PCA-6131","A0001J5",279,new Date(123,5,11),5,20));
+        addBus(new Bus("PCA-6131","A0001J5",279,new Date(123,5,11),5,5));
         addBus(new Bus("PTJ-560","A00012F5",1000,new Date(123,6,11),5,20));
 
     }

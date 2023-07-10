@@ -3,8 +3,10 @@ package ClaseOperacionales;
 import Clases.Horario;
 import Clases.Ruta;
 import Clases.SolicitudReserva;
+import Clases.Usuario;
 import Ordenamiento.OrdenHorarios;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -40,20 +42,30 @@ public class GestionReservas {
         return true;
     }
 
-    public List<String> detalleReservao(){
-        List<String> nombres=new ArrayList<String>();
+    public String detalleReservaoUsuario(Usuario usuario){
+        String respuesta="";
         for (SolicitudReserva SR1 : listadoReserva) {
-            nombres.add(SR1.getRuta()+"("+SR1.getFecha()+"-"+ SR1.getHora()+")");
+            if(SR1.esMismoUsuario(usuario)){
+                if(SR1.getStatus()==1){
+                    respuesta=respuesta+"\n--SOLICITUD APROBADA--\n"+"Fecha: "+SR1.getFecha().toString()+"\nRuta: "+SR1.getRuta().toString()+"\nPrecio: "+SR1.getPrecio()+"\nPara finalizar el proceso de pago contactese con: 0987409415";
+                }else{
+                    respuesta=respuesta+"\n--SOLICITUD RECHAZADA--\n"+"Fecha: "+SR1.getFecha().toString()+"\nRuta: "+SR1.getRuta().toString()+"\nPara recibir información sobre el rechazo comunicarse con:0987409415";
+                }
+
+            }
+
         }
-        return nombres;
+        return respuesta;
     }
 
     public SolicitudReserva encontrarReserva(int indice){
         return listadoReserva.get(indice);
     }
 
+
+
     private void QuemarDatos(){
-        listadoReserva.add(new SolicitudReserva(Date.from(null),new Ruta("Ruta 1",1,"UdlaPark","Quito"), LocalTime.of(12, 30, 0),1));
+        //listadoReserva.add(new SolicitudReserva(LocalDate.from(null),new Ruta("Ruta 1",1,"UdlaPark","Quito"), LocalTime.of(12, 30, 0),1));
     }
 
 

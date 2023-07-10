@@ -1,8 +1,5 @@
 package Interfaz;
-import ClaseOperacionales.GestionBuses;
-import ClaseOperacionales.GestionHorarios;
-import ClaseOperacionales.GestionRutas;
-import ClaseOperacionales.GestionUsuario;
+import ClaseOperacionales.*;
 import Clases.*;
 import Clases.Ruta;
 import Grafo.Vertice;
@@ -106,6 +103,15 @@ public class AdministradorCRUD extends JFrame {
     private JButton DIJASKSTRAButton;
     private JTextArea textArea1;
     private JPanel PanelGrafo;
+    private JButton cerrarSesiónButton;
+    private JButton desencolarButton;
+    private JTextArea textArea2;
+    private JButton aprobarButton;
+    private JTextField textField1;
+    private JButton rechazarButton;
+    private JLabel txtPendientes;
+    private JTextField txtVerticeInicial;
+    private JTextField textField2;
 
     private JButton aceptarButton;
 
@@ -133,6 +139,10 @@ public class AdministradorCRUD extends JFrame {
         JPanelSucursal.setVisible(false);
         JPanelHorario.setVisible(false);
         PanelGrafo.setVisible(false);
+        txtPendientes.setText(""+GestionReservasCola.getInstancia().getListadoReserva().size());
+        rechazarButton.setEnabled(false);
+        aprobarButton.setEnabled(false);
+        desencolarButton.setEnabled(true);
 
         btnRegistrarAdmin.addActionListener(new ActionListener() {
             @Override
@@ -235,11 +245,11 @@ public class AdministradorCRUD extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                     int horainicio = Integer.parseInt(ComboBoxHin.getSelectedItem().toString());
-                    int minutoinicio = Integer.parseInt(ComboBoxMin.getSelectedItem().toString());
-                    int horafin = Integer.parseInt(ComboBoxHfin.getSelectedItem().toString());
-                    int minutofin = Integer.parseInt(ComoboBoxMfin.getSelectedItem().toString());
 
-                    if (gestionHorarios.addHorario(new Horario(ComoboBoxMfin.getSelectedIndex(), LocalTime.of(horainicio, minutoinicio, 00), LocalTime.of(horafin, minutofin, 00)))) {
+                    int horafin = Integer.parseInt(ComboBoxHfin.getSelectedItem().toString());
+
+
+                    if (gestionHorarios.addHorario(new Horario(ComoboBoxMfin.getSelectedIndex(), LocalTime.of(horainicio, 00, 00), LocalTime.of(horafin, 00, 00)))) {
                         JOptionPane.showMessageDialog(null, "Registro de horario correcto");
                         cargarComboBoxHorario();
                     } else {
@@ -477,7 +487,7 @@ public class AdministradorCRUD extends JFrame {
                         JOptionPane.showMessageDialog(null, "Esta Parada ya existe");
                     }
                 }else{
-                    JOptionPane.showMessageDialog(null, "No se puede agregar la parada, complete el campo de pesa");
+                    LogIn login=new LogIn("RegresoLogin");
                 }
             }
         });
@@ -493,7 +503,7 @@ public class AdministradorCRUD extends JFrame {
         DIJASKSTRAButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Dictionary[] result = ruta.getGrafoRuta().Dijsktra(ruta.getGrafoRuta().getVertexByValue(BusVerticeInicialcomboBox1.getSelectedItem().toString()));
+                Dictionary[] result = ruta.getGrafoRuta().Dijsktra(ruta.getGrafoRuta().getVertexByValue(txtOrigen.getText()));
                 Dictionary<String, Integer> distances = result[0];
                 Dictionary<String, Vertice> previous = result[1];
 
@@ -510,6 +520,66 @@ public class AdministradorCRUD extends JFrame {
                     resultText.append("-------------------\n");
                 }
                 textArea1.setText(resultText.toString());
+            }
+        });
+        cerrarSesiónButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                usuario=null;
+                LogIn log=new LogIn("Login");
+                log.setVisible(true);
+
+            }
+        });
+        desencolarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(GestionReservasCola.getInstancia().getListadoReserva().size()>0){
+                    SolicitudReserva solicitudReserva=GestionReservasCola.getInstancia().getListadoReserva().peek();
+                    textArea2.setText(solicitudReserva.toString());
+                    txtPendientes.setText(""+(GestionReservasCola.getInstancia().getListadoReserva().size()-1));
+                    desencolarButton.setEnabled(false);
+                    rechazarButton.setEnabled(true);
+                    aprobarButton.setEnabled(true);
+                }else{
+                    JOptionPane.showMessageDialog(null, "No hay solicitudes pendientes");
+                }
+
+            }
+        });
+        aprobarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(validar.validacionStringDouble(textField1.getText())){
+                    SolicitudReserva solicitudReserva=GestionReservasCola.getInstancia().getListadoReserva().poll();
+                    solicitudReserva.setStatus(1);
+                    solicitudReserva.setPrecio(Double.parseDouble(textField1.getText()));
+                    GestionReservas.getInstancia().addReserva(solicitudReserva);
+                    JOptionPane.showMessageDialog(null, "Solicitud procesada con éxito");
+                    textArea2.setText("");
+                    desencolarButton.setEnabled(true);
+                    rechazarButton.setEnabled(false);
+                    aprobarButton.setEnabled(false);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Llene correctamente el campo de precio");
+                }
+
+            }
+        });
+        rechazarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    SolicitudReserva solicitudReserva=GestionReservasCola.getInstancia().getListadoReserva().poll();
+                    solicitudReserva.setStatus(0);
+                    solicitudReserva.setPrecio(0);
+                    GestionReservas.getInstancia().addReserva(solicitudReserva);
+                    JOptionPane.showMessageDialog(null, "Solicitud rechazada");
+                    textArea2.setText("");
+                    desencolarButton.setEnabled(true);
+                    rechazarButton.setEnabled(false);
+                    aprobarButton.setEnabled(false);
+
             }
         });
     }
@@ -539,7 +609,7 @@ public class AdministradorCRUD extends JFrame {
                     comboBoxModel2.addElement(data);
                     comboBoxModel3.addElement(data);
                 }
-    }
+            }
 
         }
 
