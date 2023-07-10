@@ -111,7 +111,8 @@ public class AdministradorCRUD extends JFrame {
     private JButton rechazarButton;
     private JLabel txtPendientes;
     private JTextField txtVerticeInicial;
-    private JTextField textField2;
+    private JTextField textVerticeFinal;
+    private JButton finalizarRutaButton;
 
     private JButton aceptarButton;
 
@@ -446,9 +447,14 @@ public class AdministradorCRUD extends JFrame {
                     ruta=new Ruta(txtOrigen.getText()+"-"+txtDestino.getText(),horasMinutos,txtOrigen.getText(),txtDestino.getText());
 
                     if(GestionRutas.getInstancia().addRuta(ruta)){
-                        JOptionPane.showMessageDialog(null, "Se creo Correctamente la Ruta");
+                        JOptionPane.showMessageDialog(null, "Se creo Correctamente la Ruta,complete los campos");
                         PanelGrafo.setVisible(true);
                         cargarComboBox();
+                        btnIngresarRuta.setEnabled(false);
+                        txtOrigen.setEnabled(false);
+                        txtDestino.setEnabled(false);
+                        txtVerticeInicial.setText(txtOrigen.getText());
+                        textVerticeFinal.setText(txtDestino.getText());
                     }else{
                         JOptionPane.showMessageDialog(null, "No fue posible crear la Ruta, ya existe una con el mismo destino y origen");
                     }
@@ -508,16 +514,18 @@ public class AdministradorCRUD extends JFrame {
                 Dictionary<String, Vertice> previous = result[1];
 
                 StringBuilder resultText = new StringBuilder();
-                Enumeration<String> keys = distances.keys(); // Obtener las claves usando keys()
+                Enumeration<String> keys = distances.keys();
                 while (keys.hasMoreElements()) {
                     String vertexData = keys.nextElement();
                     int distance = distances.get(vertexData);
                     Vertice previousVertex = previous.get(vertexData);
 
-                    resultText.append("Vertice: ").append(vertexData).append("\n");
-                    resultText.append("Distancia: ").append(distance).append("\n");
-                    resultText.append("Vértice previo: ").append(previousVertex.getDato()).append("\n");
-                    resultText.append("-------------------\n");
+                    if (vertexData.equals(txtDestino.getText()) && distance > 0 && distance != 2147483647) {
+                        resultText.append("Vertice: ").append(vertexData).append("\n");
+                        resultText.append("Distancia: ").append(distance).append("\n");
+                        resultText.append("Vértice previo: ").append(previousVertex.getDato()).append("\n");
+                        resultText.append("-------------------\n");
+                    }
                 }
                 textArea1.setText(resultText.toString());
             }
@@ -582,6 +590,15 @@ public class AdministradorCRUD extends JFrame {
 
             }
         });
+        finalizarRutaButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                btnIngresarRuta.setEnabled(true);
+                PanelGrafo.setVisible(false);
+                txtOrigen.setEnabled(true);
+                txtDestino.setEnabled(true);
+            }
+        });
     }
 
             private void cargarComboBoxHorario() {
@@ -602,7 +619,7 @@ public class AdministradorCRUD extends JFrame {
                 DefaultComboBoxModel<String> comboBoxModel3 = new DefaultComboBoxModel<>();
                 VerticeIniciocomboBox1.setModel(comboBoxModel);
                 VerticeFinalcomboBox1.setModel(comboBoxModel2);
-                BusVerticeInicialcomboBox1.setModel(comboBoxModel3);
+                //BusVerticeInicialcomboBox1.setModel(comboBoxModel3);
                 for (Vertice vertice : ruta.getGrafoRuta().getVertices() ) {
                     String data = vertice.getDato();
                     comboBoxModel.addElement(data);

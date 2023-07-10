@@ -8,7 +8,7 @@ public class Bus {
     private String matricula;
     private int Kilometraje;
     private Date fechamantenieminto;
-    private int estado;//1 esta el bus activo, 0 esta el bus dado de baja, 2 esta fuera por mantenimiento
+
     private int numeroDefectos;
     private int capacidadPersonas;
     private CapacidadHorario capacidadHorario;
@@ -18,14 +18,12 @@ public class Bus {
         this.matricula = matricula;
         Kilometraje = kilometraje;
         this.fechamantenieminto = fechamantenieminto;
-        this.estado =1;
         this.numeroDefectos = numeroDefectos;
         this.capacidadPersonas = capacidadPersonas;
         Calendar calendar = Calendar.getInstance();
         int mes = calendar.get(Calendar.MONTH) + 1;
         capacidadHorario=new CapacidadHorario(mes);
     }
-
 
     public String getPlaca() {
         return placa;
@@ -43,9 +41,7 @@ public class Bus {
         return fechamantenieminto;
     }
 
-    public int getEstado() {
-        return estado;
-    }
+
 
     public int getNumeroDefectos() {
         return numeroDefectos;
@@ -59,8 +55,8 @@ public class Bus {
         //EL DOMINGO ES CERO,lunes es 1
         int diaMan= fechamantenieminto.getDay();
         int diaMes=fechamantenieminto.getMonth();//Puede haber error
+
         if(diaMan!=dia&&diaMes!=mes){
-            if(estado==1){
                 if(this.capacidadPersonas>=capacidadPersonas){
                     for(int i=hora;i<=horaFin;i++){
                         if(capacidadHorario.reservarHora(dia,i)){
@@ -70,12 +66,9 @@ public class Bus {
                     }
                     return true;
                 }
-
-            }
         }
         return false;
     }
-
     @Override
     public String toString() {
         return "--BUS--" +
@@ -83,7 +76,6 @@ public class Bus {
                 "Matricula='" + matricula + "\n" +
                 "Kilometraje=" + Kilometraje +"\n"+
                 "Fechamantenieminto=" + fechamantenieminto +"\n"+
-                "Estado=" + estado +"\n"+
                 "NumeroDefectos=" + numeroDefectos +"\n"+
                 "CapacidadPersonas=" + capacidadPersonas +"\n";
     }

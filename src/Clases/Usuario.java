@@ -56,6 +56,10 @@ public class Usuario {
         this.apellido = apellido;
     }
 
+    public int getEstado() {
+        return estado;
+    }
+
     @Override
     public String toString() {
         return "\n --Usuario--\n" +
