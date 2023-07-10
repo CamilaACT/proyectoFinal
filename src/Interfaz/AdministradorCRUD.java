@@ -113,6 +113,10 @@ public class AdministradorCRUD extends JFrame {
     private JTextField txtVerticeInicial;
     private JTextField textVerticeFinal;
     private JButton finalizarRutaButton;
+    private JButton aprobadasButton;
+    private JButton negadasButton;
+    private JTextArea textArea3;
+    private JTextArea textArea4;
 
     private JButton aceptarButton;
 
@@ -485,16 +489,21 @@ public class AdministradorCRUD extends JFrame {
         insertarButton1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!PesotextField1.getText().isBlank()){
-                    if(ruta.getGrafoRuta().getVertexByValue(VerticeIniciocomboBox1.getSelectedItem().toString()).aristaUnica(VerticeFinalcomboBox1.getSelectedItem().toString())){
-                        ruta.getGrafoRuta().addArista(VerticeIniciocomboBox1.getSelectedItem().toString(),VerticeFinalcomboBox1.getSelectedItem().toString(),Integer.parseInt(PesotextField1.getText()));
-                        JOptionPane.showMessageDialog(null, "Parada agregada con éxito");
+                if(!VerticeIniciocomboBox1.getSelectedItem().toString().equals(VerticeFinalcomboBox1.getSelectedItem().toString())){
+                    if(!PesotextField1.getText().isBlank()){
+                        if(ruta.getGrafoRuta().getVertexByValue(VerticeIniciocomboBox1.getSelectedItem().toString()).aristaUnica(VerticeFinalcomboBox1.getSelectedItem().toString())){
+                            ruta.getGrafoRuta().addArista(VerticeIniciocomboBox1.getSelectedItem().toString(),VerticeFinalcomboBox1.getSelectedItem().toString(),Integer.parseInt(PesotextField1.getText()));
+                            JOptionPane.showMessageDialog(null, "Parada agregada con éxito");
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Esta Parada ya existe");
+                        }
                     }else{
-                        JOptionPane.showMessageDialog(null, "Esta Parada ya existe");
+                        LogIn login=new LogIn("RegresoLogin");
                     }
                 }else{
-                    LogIn login=new LogIn("RegresoLogin");
+                    JOptionPane.showMessageDialog(null, "No se puede poner la misma paradad incial y final");
                 }
+
             }
         });
         mostrarRutaButton.addActionListener(new ActionListener() {
@@ -597,6 +606,18 @@ public class AdministradorCRUD extends JFrame {
                 PanelGrafo.setVisible(false);
                 txtOrigen.setEnabled(true);
                 txtDestino.setEnabled(true);
+            }
+        });
+        aprobadasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea3.setText(GestionReservas.getInstancia().listaAprDes(1));
+            }
+        });
+        negadasButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                textArea4.setText(GestionReservas.getInstancia().listaAprDes(0));
             }
         });
     }

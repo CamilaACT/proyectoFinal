@@ -185,8 +185,8 @@ public class GestionUsuario {
         addUsuario(new Usuario("1711512663","Camila","Cabrera"));
         addUsuario(new Chofer("1750473942","Chofer","Ingreso",0));
         addUsuario(new Chofer("1750473942","Chofer2","Ingreso2",1));
-        addUsuario(new Cliente("1724051592","Dylan","Clerque","Dyl","123"
-                ,"dylan.clerque..."));
+        addUsuario(new Cliente("1724051592","Dylan","Clerque","Dyl","123","dylan.clerque..."));
+        addUsuario(new AsistenteAdministrativo("1721436507","AsistenteCami","Camila","El inca"));
     }
 
 

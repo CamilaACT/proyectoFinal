@@ -57,6 +57,20 @@ public class GestionReservas {
         }
         return respuesta;
     }
+    public String listaAprDes(int indice){
+        String respuesta="";
+        for (SolicitudReserva SR1 : listadoReserva) {
+            if(SR1.getStatus()==indice){
+                respuesta=respuesta+"\n--SOLICITUD APROBADA--\n"+"Fecha: "+SR1.getFecha().toString()+"\nRuta: "+SR1.getRuta().toString()+"\nPrecio: "+SR1.getPrecio();
+
+            }else {
+                respuesta=respuesta+"\n--SOLICITUD RECHAZADA--\n"+"Fecha: "+SR1.getFecha().toString()+"\nRuta: "+SR1.getRuta().toString();
+            }
+
+        }
+        return respuesta;
+
+    }
 
     public SolicitudReserva encontrarReserva(int indice){
         return listadoReserva.get(indice);
